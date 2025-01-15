@@ -1,7 +1,27 @@
 import { useState } from 'react';
 
-export const ButtonToggle = () => {
-  const [isEnabled, setIsEnabled] = useState(true);
+interface ButtonToggleProps {
+  onToggle?: (enabled: boolean) => void;
+  enabledText?: string;
+  disabledText?: string;
+}
+
+export default function ButtonToggle({
+  onToggle,
+  enabledText = 'Enable Event',
+  disabledText = 'Disable Event',
+}: ButtonToggleProps) {
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const handleEnable = () => {
+    setIsEnabled(true);
+    onToggle?.(true);
+  };
+
+  const handleDisable = () => {
+    setIsEnabled(false);
+    onToggle?.(false);
+  };
 
   return (
     <div className="relative flex overflow-hidden whitespace-nowrap rounded-lg border border-primary/50 bg-secondary px-7 py-2">
@@ -13,21 +33,23 @@ export const ButtonToggle = () => {
 
       <button
         className={`z-10 flex-1 whitespace-nowrap pr-5 text-center font-bold transition ${
-          isEnabled ? 'text-white' : 'text-primary hover:text-white'
+          isEnabled
+            ? 'hover:animate-subtle-ping text-white'
+            : 'text-primary hover:text-white'
         }`}
-        onClick={() => setIsEnabled(true)}
+        onClick={handleEnable}
       >
-        Enable Event
+        {enabledText}
       </button>
 
       <button
         className={`z-10 flex-1 whitespace-nowrap pl-5 text-center font-bold transition ${
           !isEnabled ? 'text-white' : 'text-primary hover:text-white'
         }`}
-        onClick={() => setIsEnabled(false)}
+        onClick={handleDisable}
       >
-        Disable Event
+        {disabledText}
       </button>
     </div>
   );
-};
+}
