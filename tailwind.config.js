@@ -4,7 +4,16 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],  theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#4323FF',
+        },
+        secondary: {
+          DEFAULT: '#221c3500',
+        },
+      },
+    },
   },
   plugins: [],
 }
